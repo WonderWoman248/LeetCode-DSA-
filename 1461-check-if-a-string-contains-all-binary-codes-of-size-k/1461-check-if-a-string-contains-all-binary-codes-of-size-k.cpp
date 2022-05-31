@@ -3,7 +3,7 @@ public:
     bool hasAllCodes(string s, int k) {
         set<string>binaryCodes;
         
-        int totalCodesPossible=pow(2,k);
+        int totalCodesPossible=1<<k;
         for(int i=0;i<s.length();i++){
             string temp=s.substr(i,k);
             if(temp.length()==k)
