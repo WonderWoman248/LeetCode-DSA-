@@ -12,30 +12,27 @@
 class Solution {
 public:
     int count;
-    set<TreeNode*> isCovered;
+   
     int minCameraCover(TreeNode* root) {
-        if(root==NULL)return 0;
         count=0;
-        isCovered.insert(NULL);
-        dfs(root,NULL);
-        return count;
+        int ans= dfs(root);
+        return ans==0?count+1:count;
     }
-    
-    void dfs(TreeNode* node, TreeNode* parent){
-        if(node != NULL){
-            dfs(node->left,node);
-            dfs(node->right,node);
-            
-            if(parent==NULL and isCovered.find(node)==isCovered.end() ||
-              isCovered.find(node->left)==isCovered.end() 
-               or isCovered.find(node->right)==isCovered.end()){
-                count++;
-                isCovered.insert(parent);
-                isCovered.insert(node);
-                isCovered.insert(node->left);
-                isCovered.insert(node->right);
-            }
-                
+//     0-> is Not covered
+//     1-> is covered
+//     2-> has camera
+    int dfs(TreeNode* node){
+        if(node==NULL) return 1;
+        int left=dfs(node->left);
+        int right=dfs(node->right);
+        
+        if(left==0 or right == 0){
+            count++;
+            return 2;
         }
+        else if(left==2 or right==2){
+            return 1;
+        }
+        return 0;
     }
 };
