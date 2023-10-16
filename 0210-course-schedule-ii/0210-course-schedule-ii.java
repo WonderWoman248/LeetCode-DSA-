@@ -29,14 +29,13 @@ class Solution {
     }
     
     private boolean dfs(int node, ArrayList<ArrayList<Integer>>adj,int[]visited,Stack st){
-        visited[node]=1;
+       visited[node]=1;
        for(int i: adj.get(node)){
            if(visited[i]==1)
                 return true;
             else if(visited[i]==0){
                 if(dfs(i,adj,visited,st))
                     return true;
-                
             }
        }
        visited[node]=-1;
