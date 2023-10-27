@@ -1,41 +1,42 @@
 class Solution {
     public void nextPermutation(int[] nums) {
         int n = nums.length;
-
-        int index = -1;
-
-        for(int i=n-2;i>=0;i--){
-            if(nums[i+1]>nums[i]){
-                index = i;
+        int changingIndex = -1;
+        for(int i= n-2;i>=0;i--){
+            if(nums[i]<nums[i+1]){
+                changingIndex = i;
                 break;
             }
         }
-       
-        if(index==-1){
-             reverse(nums,0,n-1);
-             return;
+        if(changingIndex == -1)
+            reverseArray(nums,0,n-1);
+        else{
+            int minIndex = -1;
+            int minEle = Integer.MAX_VALUE;
+            for(int i=n-1;i>changingIndex;i--){
+                if(nums[i]>nums[changingIndex]){
+                    if(nums[i]< minEle){
+                        minIndex= i;
+                        minEle = nums[i];
+                    }
+                }
+            }
+            int temp = nums[changingIndex];
+            nums[changingIndex] = nums[minIndex];
+            nums[minIndex] = temp;
+            reverseArray(nums,changingIndex+1,n-1);
         }
-           
         
-        for(int i = n-1;i>index;i--){
-            if(nums[i]>nums[index]){
-                int temp = nums[index];
-                nums[index]= nums[i];
-                nums[i]= temp;
-                break;
-            }
-        }
 
-         reverse(nums,index+1,n-1);
     }
 
-    private void reverse(int[]nums, int start, int end){
-        while(start<end){
-            int temp= nums[start];
+    private void reverseArray(int []nums, int start, int end){
+        while(start<=end){
+            int temp = nums[start];
             nums[start]=nums[end];
             nums[end]=temp;
-            end--;
             start++;
+            end--;
         }
     }
 }
