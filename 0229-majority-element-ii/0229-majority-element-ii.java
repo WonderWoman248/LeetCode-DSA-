@@ -1,47 +1,48 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
         int n = nums.length;
-        List<Integer>majorityElement = new ArrayList<Integer>();
-        if(n==1){
-             majorityElement.add(nums[0]);
-             return majorityElement;
-        }
-           
-
-        int firstNum=nums[0],secondNum= nums[1];
-        int firstNumCount=0, secondNumCount=0;
+        int reqMinCount = n/3;
+        List<Integer> ans = new ArrayList<>();
+        int firstMajorEle=0, secondMajorEle = 0;
+        int firstMajorEleCount =0,secondMajorEleCount=0;
 
         for(int i=0;i<n;i++){
-            if(firstNumCount== 0 && nums[i]!= secondNum){
-                firstNum=nums[i];
-                firstNumCount++;
+            if(firstMajorEleCount == 0 && nums[i]!= secondMajorEle){
+                firstMajorEleCount++;
+                firstMajorEle = nums[i];
             }
-            else if(secondNumCount== 0 && nums[i]!= firstNum){
-                secondNum=nums[i];
-                secondNumCount++;
+            else if(secondMajorEleCount == 0 && nums[i]!= firstMajorEle){
+                secondMajorEleCount++;
+                secondMajorEle = nums[i];
             }
-            else if(nums[i]==firstNum){
-                firstNumCount++;
+            else if(firstMajorEle == nums[i] ){
+                firstMajorEleCount++;
             }
-            else if(nums[i]==secondNum){
-                secondNumCount++;
+            else if(secondMajorEle == nums[i] ){
+                secondMajorEleCount++;
             }
             else{
-                firstNumCount--;
-                secondNumCount--;
+                secondMajorEleCount--;
+                firstMajorEleCount--;
             }
+
         }
         int count1=0,count2=0;
-        for(int i=0;i<n;i++){
-            if(nums[i]==firstNum) count1++;
-            if(nums[i]==secondNum)count2++;
-        }
-        if(count1 > n/3)
-            majorityElement.add(firstNum);
-        if(count2 > n/3 && secondNum != firstNum)
-            majorityElement.add(secondNum);
-
-        return majorityElement;
         
+        for(int i = 0;i<n;i++){
+            if(nums[i]==firstMajorEle)
+                count1++;
+            else if(nums[i]== secondMajorEle)
+                count2++;
+        }
+
+        if(count1 > reqMinCount)
+            ans.add(firstMajorEle);
+        if(count2>reqMinCount)
+            ans.add(secondMajorEle);
+
+        return ans;
     }
 }
+
+
